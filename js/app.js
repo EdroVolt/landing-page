@@ -34,16 +34,6 @@ function isSectionNearTopOfViewPort(sectionElement) {
   return bounding.top >= -50 && bounding.top < 300;
 }
 
-// get coordinates of the element relative to the document
-function getCoordinates(element) {
-  const bounding = element.getBoundingClientRect();
-
-  return {
-    y: bounding.top + window.pageYOffset,
-    x: bounding.left + window.pageXOffset,
-  };
-}
-
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -55,9 +45,10 @@ for (let i = 0; i < sections.length; i++) {
   const li = document.createElement("li");
   const a = document.createElement("a");
 
-  a.innerHTML = `a ${i + 1}`;
+  a.innerHTML = `section ${i + 1}`;
   // this data-nave attribue used for attach the anchor tage with specific section by index
   a.setAttribute("data-nav", `${i}`);
+  a.classList.add("menu__link");
 
   li.appendChild(a);
   frame.appendChild(li);
@@ -85,9 +76,23 @@ window.addEventListener("scroll", function (event) {
 
 // scroll to specific section when clicking on anchor tage by the data-nav value
 navBarList.addEventListener("click", function (event) {
+  const anchorsTags = document.querySelectorAll("a");
+  // remove active class from all anchor tags
+  for (let i = 0; i < anchorsTags.length; i++) {
+    const anchorTag = anchorsTags[i];
+    anchorTag.classList.remove("active__link");
+  }
   const element = event.target;
   if (element.tagName == "A") {
+    // add active class to the target anchor tage
+    element.classList.add("active__link");
+    // get the section attached to the anchor tag
     const section = sections[element.getAttribute("data-nav")];
-    window.scrollTo(0, getCoordinates(section).y);
+    // scroll to the section 
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "nearest"
+    });
   }
 });

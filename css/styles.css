@@ -72,13 +72,6 @@ section {
 
 .navbar__menu li {
     display: inline-block;
-    background: yellow;
-    margin: 10px;
-}
-
-.navbar__menu li a {
-    padding: 10px;
-    color: blue;
 }
 
 .navbar__menu .menu__link {
@@ -94,6 +87,13 @@ section {
     color: #fff;
     transition: ease 0.3s all;
 }
+
+.navbar__menu .active__link {
+    background: #333;
+    color: #fff;
+    /* transition: ease 0.3s all; */
+}
+
 
 /* Header Styles */
 .page__header {
